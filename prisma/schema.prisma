@@ -1,0 +1,21 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ScheduledImage {
+  id           Int       @id @default(autoincrement())
+  title        String?
+  prompt       String?
+  imageUrl     String?   @map("image_url")
+  imageBase64  String?   @map("image_base64") @db.Text
+  scheduledAt  DateTime? @map("scheduled_at")
+  publishAt    DateTime? @map("publish_at")
+  status       String    @default("pending")
+
+  @@map("scheduled_images")
+}
